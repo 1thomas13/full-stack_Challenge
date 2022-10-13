@@ -1,4 +1,4 @@
-const { addOperation, allOperations, deleteOperation } = require("../repositories/operation")
+const { addOperation, allOperations, deleteOperation, findOperation, editOperation } = require("../repositories/operation")
 
 exports.allOperations = async (req, res) => {
 
@@ -28,12 +28,24 @@ exports.create = async (req, res) => {
 }
 
 exports.edit = async (req, res) => {
+
+  const { amount, description, categoryId } = req.body
+  const operationId = req.params.id
+
+  const operationExist = await findOperation(operationId)
+  if(!operationExist) return res.status(400).json({ error: 'The operation not exist' })
+
+  await editOperation(operationExist, amount, description, categoryId)
+
   res.status(200).json({ msg: 'operation edited successfully' })
 }
 
 exports.remove = async (req, res) => {
 
   const operationId = req.params.id
+
+  const operationExist = await findOperation(operationId)
+  if(!operationExist) return res.status(400).json({ error: 'The operation not exist' })
 
   await deleteOperation( operationId )
 
