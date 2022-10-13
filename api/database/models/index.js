@@ -56,4 +56,4 @@ Category.hasOne(Operation, {foreignKey: "categoryId"})
   await Category.create({category: 'tecnology', image: 'asd'})
 })()
 
-module.exports = { User, Operation }
+module.exports = { User, Operation, Category }

@@ -6,6 +6,7 @@ const port = process.env.PORT || 5000
 
 const userRoutes = require('./routes/user')
 const operationRoutes = require('./routes/operation')
+const categoryRoutes = require('./routes/category')
 
 app.use(express.json())
 
@@ -15,6 +16,7 @@ app.get('/', (_req,res) => {
 
 app.use('/api/user', userRoutes)
 app.use('/api/operation', operationRoutes)
+app.use('/api/category', categoryRoutes)
 
 
 app.listen( port, () => {
