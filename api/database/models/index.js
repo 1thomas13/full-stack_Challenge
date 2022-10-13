@@ -4,42 +4,42 @@ const { sequelize } = require('../connection')
 const User = sequelize.define('User', {
   username: {
     type: DataTypes.STRING,
-    allowNull: false
+    notNull: true
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    notNull: true
   },
 })
 
 const Category = sequelize.define('Category', {
   category: {
     type: DataTypes.STRING,
-    allowNull: false
+    notNull: true
   },
   image: {
     type: Sequelize.STRING,
-    allowNull: false
+    notNull: true
   },
 })
 
 const Operation = sequelize.define('Operation', {
   type: {
     type: DataTypes.STRING,
-    allowNull: false
+    notNull: true
   },
   amount: {
-    type: Sequelize.NUMBER,
-    allowNull: false
+    type: Sequelize.INTEGER,
+    notNull: true
   },
   description: {
     type: Sequelize.STRING,
-    allowNull: true
+    notNull: false
   },
 })
 
 User.hasMany(Operation, {foreignKey: "userId"})
-Operation.hasOne(Operation, {foreignKey: "userId"})
+Category.hasOne(Operation, {foreignKey: "categoryId"})
 
 
 ;(async() => {

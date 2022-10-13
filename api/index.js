@@ -13,8 +13,8 @@ app.get('/', (_req,res) => {
   res.status(200).json('ok')
 })
 
-app.use('/api', userRoutes)
+app.use('/api/user', userRoutes)
 
 app.listen( port, () => {
-  console.log('listen on port 3000')
+  console.log(`app listen on port ${port}`)
 })
