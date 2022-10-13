@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken')
 
 exports.register = async ( req, res ) => {
   try {
-    const { password, username } = req.body
+    const { password, username, email } = req.body
   
-    if(!password || !username) return res.status(400).json({ error: 'complete all fields' })
+    if(!password || !username | !email) return res.status(400).json({ error: 'complete all fields' })
  
     if(password < 6) return res.status(400).json({ error: 'The password must have at least 6 characters' })
 
@@ -18,7 +18,8 @@ exports.register = async ( req, res ) => {
 
     const newUser = {
       username,
-      password: hash
+      password: hash,
+      email
     }
 
     await createUser( newUser )
@@ -43,8 +44,8 @@ exports.login = async( req, res ) => {
     if(!validatePass) return res.status(400).json({error: 'incorrect password'})
 
     const token = jwt.sign({
-      username: username,
-      id: username.id
+      username,
+      id: user.id
     }, process.env.TOKEN_SECRET)
 
     res.json({msg: {token, user}})

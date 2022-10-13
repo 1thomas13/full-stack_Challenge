@@ -10,6 +10,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     notNull: true
   },
+  email: {
+    type: DataTypes.STRING,
+    notNull: true
+  },
 })
 
 const Category = sequelize.define('Category', {
@@ -43,8 +47,13 @@ Category.hasOne(Operation, {foreignKey: "categoryId"})
 
 
 ;(async() => {
-  await sequelize.sync({ force: true })
+  await sequelize.sync()
   console.log("All models were synchronized successfully.")
+
+  await Category.create({category: 'food', image: 'asd'})
+  await Category.create({category: 'services', image: 'asd'})
+  await Category.create({category: 'healt', image: 'asd'})
+  await Category.create({category: 'tecnology', image: 'asd'})
 })()
 
-module.exports = { User, Operation}
+module.exports = { User, Operation }
