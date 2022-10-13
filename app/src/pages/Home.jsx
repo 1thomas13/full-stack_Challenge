@@ -1,27 +1,29 @@
 import React from 'react'
+import { NavBar } from '../components/NavBar'
 
 export const Home = () => {
   return (
     <div>
+      <NavBar/>
       <div className="w-screen h-72 bg-gradient-to-t from-green-400 to-blue-500"></div>
-      <main className=" p-12 m-12 relative bg-slate-200 shadow-xl -top-48 ">
-        <section className="flex justify-between ">
-          <div>
-            <h2>Income</h2>
-            <h4 className="text-blue-600">$400</h4>
+      <main className=" p-12 m-auto w-2/3 relative bg-slate-200 shadow-xl -top-48 ">
+        <section className="w-full justify-between ">
+          <div className='flex justify-between items-center'>
+            <div>
+              <h2>Income</h2>
+              <h4 className="text-blue-600">$400</h4>
+            </div>
             <div>
               <h2>Total</h2>
               <h4 className="text-black">$400</h4>
             </div>
-          </div>
-          <div className="flex flex-col">
             <div>
               <h2>Expenses</h2>
               <h4 className="text-red-600">$400</h4>
             </div>
-            <div>
-              <p>Grafico</p>
-            </div>
+          </div>
+          <div className='m-auto'>
+            <p className='m-auto'>Grafico</p>
           </div>
         </section>
         <section className="border-2 border-gray-800">
