@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
 import {
@@ -11,12 +12,13 @@ import 'react-swipeable-list/dist/styles.css'
 
 import { BsTrash } from 'react-icons/bs'
 import { FiEdit } from 'react-icons/fi'
+import { removeOperation } from '../services/operations'
 
-export const Operation = () => {
+export const Operation = ({ operation, categories, setOpenCloseModal, setCurrentOperation }) => {
   const leadingActions = () => {
     return (
       <LeadingActions>
-        <SwipeAction onClick={() => console.log('edit')}>
+        <SwipeAction onClick={() => removeOperation(operation.id)} destructive={true}>
           <div className='bg-red-300 flex rounded items-center pl-8 text-white'>
             <BsTrash className='text-3xl ' />
           </div>
@@ -28,14 +30,27 @@ export const Operation = () => {
   const trailingActions = () => {
     return (
       <TrailingActions>
-        <SwipeAction onClick={() => console.log('destr')}>
-          <div className='bg-[#5ea8d7] flex rounded items-center pr-8 text-white'>
-            <FiEdit className='text-3xl ' />
-          </div>
-        </SwipeAction>
-      </TrailingActions>
+        <SwipeAction onClick={() => {
+          setOpenCloseModal(true)
+          setCurrentOperation({
+            id: operation.id,
+            categoryId: operation.categoryId,
+            description: operation.description,
+            amount: operation.amount,
+            type: operation.type
+          })
+        }}
+      >
+        <div className='bg-[#5ea8d7] flex rounded items-center pr-8 text-white'>
+          <FiEdit className='text-3xl ' />
+        </div>
+      </SwipeAction>
+      </TrailingActions >
     )
   }
+
+  // eslint-disable-next-line react/prop-types
+  const { categoryId, description, amount, type, createdAt } = operation
 
   return (
 
@@ -55,15 +70,17 @@ export const Operation = () => {
             </div>
             <div className='flex-1 min-w-0'>
               <p className='text-lg font-medium text-gray-900 truncate '>
-                Neil Sims <span className='text-xs text-gray-500'>12/3/23</span>
+                {categories.find((category) => categoryId === category.id).category} <span className='text-xs text-gray-500'>{createdAt.substring(0, 10)}</span>
               </p>
               <p className='text-md text-gray-500 truncate '>
-                email@windster.com
+                {description}
               </p>
             </div>
             <div className=' items-center text-base font-semibold text-gray-900 '>
-              - $320
-              <p className='text-sm text-center'>income</p>
+              - ${amount}
+              <p className={`text-sm text-center ${type === 'expense' ? 'text-red-500' : 'text-blue-200'} `}>
+                {type}
+              </p>
             </div>
           </div>
         </li>
