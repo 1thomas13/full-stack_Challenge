@@ -8,4 +8,4 @@ router.post('/', isLogged, create)
 router.delete('/:id', isLogged, remove)
 router.put('/:id', isLogged, edit)
 
-module.exports =  router
+module.exports = router

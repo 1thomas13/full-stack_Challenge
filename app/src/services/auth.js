@@ -10,7 +10,7 @@ export const register = async (email, username, password) => {
   const response = await res.json()
   if (response.error) throw new Error(response.error)
 
-  return response.msg.token
+  return response.token
 }
 
 export const login = async (email, password) => {

@@ -14,11 +14,16 @@ import { BsTrash } from 'react-icons/bs'
 import { FiEdit } from 'react-icons/fi'
 import { removeOperation } from '../services/operations'
 
-export const Operation = ({ operation, categories, setOpenCloseModal, setCurrentOperation }) => {
+export const Operation = ({ setOperationsFilters, operation, setOpenCloseModal, setCurrentOperation, setOperations, operations }) => {
   const leadingActions = () => {
     return (
       <LeadingActions>
-        <SwipeAction onClick={() => removeOperation(operation.id)} destructive={true}>
+        <SwipeAction onClick={() => {
+          const currentOperations = operations.filter(({ id }) => (id !== operation.id))
+          setOperations(currentOperations)
+          setOperationsFilters(operations)
+          removeOperation(operation.id)
+        }} destructive={true}>
           <div className='bg-red-300 flex rounded items-center pl-8 text-white'>
             <BsTrash className='text-3xl ' />
           </div>
@@ -34,7 +39,7 @@ export const Operation = ({ operation, categories, setOpenCloseModal, setCurrent
           setOpenCloseModal(true)
           setCurrentOperation({
             id: operation.id,
-            categoryId: operation.categoryId,
+            categoryId: operation.CategoryId,
             description: operation.description,
             amount: operation.amount,
             type: operation.type
@@ -49,8 +54,7 @@ export const Operation = ({ operation, categories, setOpenCloseModal, setCurrent
     )
   }
 
-  // eslint-disable-next-line react/prop-types
-  const { categoryId, description, amount, type, createdAt } = operation
+  const { Category, description, amount, type, createdAt } = operation
 
   return (
 
@@ -64,21 +68,21 @@ export const Operation = ({ operation, categories, setOpenCloseModal, setCurrent
             <div className='flex-shrink-0'>
               <img
                 className='w-16 h-16 rounded-full'
-                src='https://cdn.pixabay.com/photo/2015/12/23/01/14/edit-1105049_960_720.png'
+                src={Category.image}
                 alt='Neil image'
               />
             </div>
             <div className='flex-1 min-w-0'>
               <p className='text-lg font-medium text-gray-900 truncate '>
-                {categories.find((category) => categoryId === category.id).category} <span className='text-xs text-gray-500'>{createdAt.substring(0, 10)}</span>
+                {Category.category } <span className='text-xs text-gray-500'>{createdAt.replaceAll('-', '/').slice(0, 10)}</span>
               </p>
               <p className='text-md text-gray-500 truncate '>
                 {description}
               </p>
             </div>
             <div className=' items-center text-base font-semibold text-gray-900 '>
-              - ${amount}
-              <p className={`text-sm text-center ${type === 'expense' ? 'text-red-500' : 'text-blue-200'} `}>
+              ${amount}
+              <p className={`text-sm text-center ${type === 'expense' ? 'text-red-500' : 'text-blue-400'} `}>
                 {type}
               </p>
             </div>

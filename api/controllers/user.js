@@ -44,6 +44,7 @@ exports.login = async (req, res) => {
     if (!password || !email) return res.status(400).json({ error: 'complete all fields' })
 
     const user = await findUser(email)
+
     if (!user) return res.status(400).json({ error: 'user not exist' })
 
     const validatePass = bcrypt.compareSync(password, user.password)

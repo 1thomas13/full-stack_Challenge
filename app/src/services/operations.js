@@ -42,11 +42,11 @@ export const createOperation = async (categoryId, type, amount, description) => 
   const response = await res.json()
   if (response.error) throw new Error(response.error)
 
-  return response.msg
+  return response
 }
 
 export const editOperation = async (categoryId, amount, description, id) => {
-  const res = await fetch(`http://localhost:3000/api/operation${id}`, {
+  const res = await fetch(`http://localhost:3000/api/operation/${id}`, {
     method: 'put',
     headers: {
       'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const editOperation = async (categoryId, amount, description, id) => {
   const response = await res.json()
   if (response.error) throw new Error(response.error)
 
-  return response.msg
+  return response
 }
 
 export const removeOperation = async (id) => {

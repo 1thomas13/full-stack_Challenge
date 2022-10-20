@@ -9,6 +9,8 @@ exports.isLogged = async (req, res, next) => {
         return res.status(400).json(err)
       } else {
         req.data = data
+
+        console.log(req.data, 'aa')
         next()
       }
     })
